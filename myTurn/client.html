@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>WebSocket Echo Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://bit.ly/cdn-bootstrap-css">
+    <link rel="stylesheet" href="http://bit.ly/cdn-bootstrap-theme">
+    <script src="http://bit.ly/cdn-bootstrap-jq"></script>
+    <script>
+        ws = new WebSocket('ws://localhost:8181');
+        ws.onopen = function(){
+            console.log("Connected to server!");
+        };
+
+        ws.onmessage = function(e){
+            console.log(e.data);
+           $('#greeting').html(e.data);
+        };
+
+        function toggleSocket(){
+            if ($('#toggleGreetings').value === "Stop") {
+                $('#toggleGreetings').value = "Start";
+            } else {
+                $('#toggleGreetings').value = "Stop";
+            }
+        }
+
+        ws.onclose = function(e){
+            console.log("Closed connection");
+        };
+    </script>
+</head>
+<body lang="en">
+<div class="vertical-center">
+    <div class="container">
+        <h2 id="greeting" class="label-lg label-primary-lg"></h2>
+        <input type="button" id="toggleGreetings" class="btn btn-lg btn-primary" onclick="toggleSocket()" value="Stop"></input>
+    </div>
+</div>
+<script src="http://bit.ly/cdn-bootstrap-minjs"></script>
+</body>
+</html>
