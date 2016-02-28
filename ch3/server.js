@@ -5,6 +5,9 @@ var WebSocketServer = require('ws').Server,
 var uuid = require('node-uuid');
 var clients = [];
 
+console.log("Websocket Server running on port 8181");
+console.log("Awaiting client connections ...")
+
 wss.on('connection', function(ws){
     console.log('client connected');
     var client_uuid = uuid.v4();
@@ -14,7 +17,7 @@ wss.on('connection', function(ws){
     ws.on('message', function(message){
         for (var i=0; i < clients.length; i++) {
             var clientSocket = clients[i].ws;
-            if (clientSocket.readyState === WebSocket.OPEN){
+            if (clientSocket.readyState === 1){
                 console.log('client [%s]: %s', clients[i].id, message);
                 clientSocket.send(JSON.stringify({
                     "id" : client_uuid,
@@ -27,7 +30,7 @@ wss.on('connection', function(ws){
     ws.on('close', function(){
         for (var i=0; i < clients.length; i++){
             if (clients[i].id == client_uuid){
-                console.log('Client [%s] disconnected', clients_uuid);
+                console.log('Client [%s] disconnected', client_uuid);
                 clients.splice(i,1)
             }
         }

@@ -17,11 +17,15 @@
             var data = JSON.parse(e.data);
             var messages = document.getElementById("messages");
             var message = document.createElement('li');
+            message.classList.add('label');
+            message.classList.add('label-default');
             message.innerHTML = data.message;
             messages.appendChild(message);
         };
 
-
+        function sendMessage() {
+            ws.send($('#message').val());
+        }
     </script>
 </head>
 <body lang="en">
@@ -36,8 +40,10 @@
             <button type="button" id="send" class="btn btn-primary"
                     onclick="sendMessage();">Send!</button>
         </form>
+    </div>
 
-        <ul id="messages">
+    <div class="container">
+        <ul id="messages" name="messages">
 
         </ul>
     </div>
